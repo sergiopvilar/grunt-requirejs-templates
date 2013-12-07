@@ -1,4 +1,5 @@
-# requirejs-templates
+grunt-requirejs-templates
+=========================
 
 > A plugin to insert the content of template files like underscore, handlebars to variables into the javascript code
 
@@ -87,3 +88,4 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 _(Nothing yet)_
+=======
