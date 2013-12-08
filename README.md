@@ -64,7 +64,7 @@ grunt.initConfig({
 
 ### Options
 
-### options.appDir
+#### options.appDir
 Type: `String`
 Default value: `''`
 
