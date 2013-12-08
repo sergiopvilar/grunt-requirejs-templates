@@ -32,9 +32,10 @@ module.exports = function(grunt) {
     requirejs_templates: {
       dist: {
         options:{
-          appDir: '../app/',
+          appDir: 'test/fixtures',
           scripts: 'scripts',
-          templates: 'templates'
+          templates: 'templates',
+          output: 'tmp'
         }
       }
     },

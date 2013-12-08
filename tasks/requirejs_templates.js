@@ -14,6 +14,7 @@ module.exports = function(grunt) {
 
   var fs = require('fs');
   var file = require('file');
+  var mkdirp = require('mkdirp');
 
   function extraiPath(string){
 
@@ -61,11 +62,11 @@ module.exports = function(grunt) {
       var options = this.data.options;    
   
       // Lê os arquivos 
-      file.walkSync(options.appDir + '/' + options.scripts, function(path, dirPath, dirs, files){      
+      file.walkSync(options.appDir + '/' + options.scripts, function(path, dirPath, dirs, files){   
 
         for(var u in dirs){
           
-          var data = fs.readFileSync(process.cwd() + '/' + path + '/' + dirs[u], 'utf8');          
+          var data = fs.readFileSync(process.cwd() + '/' + path + '/' + dirs[u], 'utf8');   
 
           if(data.indexOf('text!' + options.templates) > -1){
 
@@ -117,8 +118,18 @@ module.exports = function(grunt) {
               
             }
 
-            var newFileContent = data.replace(defineHeader, newDefineHeader);            
-            fs.writeFileSync(process.cwd() + '/' + path + '/' + dirs[u], newFileContent, 'utf8');            
+            var newFileContent = data.replace(defineHeader, newDefineHeader);   
+
+            if(options.output){
+          
+              mkdirp.sync(process.cwd() + '/' + options.output + '/' + path);
+
+              fs.writeFileSync(process.cwd() + '/' + options.output + '/' + path + '/' + dirs[u], newFileContent, 'utf8');
+              
+            }else{
+              fs.writeFileSync(process.cwd() + '/' + path + '/' + dirs[u], newFileContent, 'utf8');            
+            }         
+            
                   
           }
 

@@ -80,7 +80,11 @@ Path to your javascript files
 Type: `String`
 Default value: `''`
 
-Path to your template files
+#### options.output
+Type: `String`
+Default value: `''`
+
+Path to your create the script files after processing
 
 ### Usage Examples
 
@@ -91,7 +95,8 @@ define({
       options: {
         appDir: "app",
         scripts: "scripts",
-        templates: "templates"
+        templates: "templates",
+        output "dist/scripts"
       },
     }
   }

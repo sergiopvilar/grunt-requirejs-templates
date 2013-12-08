@@ -41,6 +41,7 @@
     "gruntplugin"
   ],
   "dependencies": {
-    "file": "~0.2.1"
+    "file": "~0.2.1",
+    "mkdirp": "~0.3.5"
   }
 }
