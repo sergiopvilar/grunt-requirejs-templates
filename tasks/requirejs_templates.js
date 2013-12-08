@@ -100,11 +100,11 @@ module.exports = function(grunt) {
 
               index = index - templates_counter;           
 
-              variablesList.splice(index, 1);
-              require_files.splice(index, 1);              
-
-              var templateContent = "\n    var "+_variablesList[index] + " = '" + templateData + "';";
+              var templateContent = "\n    var "+variablesList[index] + " = '" + templateData + "';";
               templates_signature += templateContent;   
+
+              variablesList.splice(index, 1);
+              require_files.splice(index, 1);                            
 
               templates_counter++;            
               
