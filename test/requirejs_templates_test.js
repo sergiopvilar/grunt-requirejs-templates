@@ -23,17 +23,29 @@ var grunt = require('grunt');
 */
 
 exports.requirejs_templates = {
+  
   setUp: function(done) {
-    // setup here if necessary
     done();
   },
-  default_options: function(test) {
+
+  default: function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('tmp/test/fixtures/scripts/sampleView.js');
-    var expected = grunt.file.read('test/expected/sampleView.js');
-    test.equal(actual, expected, 'should compare two files to check if the generated file have the template into a string.');
+    var actual = grunt.file.read('tmp/test/fixtures/scripts/default/view.js');
+    var expected = grunt.file.read('test/expected/default.js');
+    test.equal(actual, expected, 'should convert one file with one template file.');
 
     test.done();
+  },
+
+  more_templates: function(test){
+
+    var actual = grunt.file.read('tmp/test/fixtures/scripts/more_templates/view.js');
+    var expected = grunt.file.read('test/expected/more_templates.js');
+    test.equal(actual, expected, 'should convert one file with two or more template files.');
+
+    test.done();
+
   }
+
 };

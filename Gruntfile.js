@@ -30,14 +30,25 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     requirejs_templates: {
-      dist: {
+      
+      default: {
         options:{
           appDir: 'test/fixtures',
-          scripts: 'scripts',
+          scripts: 'scripts/default',
           templates: 'templates',
           output: 'tmp'
         }
-      }
+      },
+
+      more_templates:{
+        options: {
+          appDir: 'test/fixtures',
+          scripts: 'scripts/more_templates',
+          templates: 'templates',
+          output: 'tmp'
+        }
+      },
+
     },
 
     // Unit tests.
