@@ -65,6 +65,12 @@ grunt.initConfig({
 
 ### Options
 
+### options.appDir
+Type: `String`
+Default value: `''`
+
+Path to your application
+
 #### options.scripts
 Type: `String`
 Default value: `''`
@@ -84,8 +90,9 @@ define({
   requirejs_templates: {
     dist: {
       options: {
-        scripts: "app/scripts",
-        templates: "app/templates"
+        appDir: "app",
+        scripts: "scripts",
+        templates: "templates"
       },
     }
   }

@@ -17,16 +17,16 @@ module.exports = function(grunt) {
 
     try{
 
-      var options = this.data.options;
+      var options = this.data.options;    
   
       // Lê os arquivos 
-      file.walkSync(options.scripts, function(path, dirPath, dirs, files){      
+      file.walkSync(options.appDir + '/' + options.scripts, function(path, dirPath, dirs, files){      
 
         for(var u in dirs){
           
           var data = fs.readFileSync(process.cwd() + '/' + path + '/' + dirs[u], 'utf8');          
 
-          if(data.indexOf('text!templates') > -1){
+          if(data.indexOf('text!' + options.templates) > -1){
 
             var defineHeader_array1 = data.split('define([');
             var defineHeader_array2 = defineHeader_array1[1].split('{');
@@ -49,13 +49,13 @@ module.exports = function(grunt) {
             var templates = [];
             var arr = data.split(' ');
             for(var i in arr){
-              if(arr[i].indexOf('text!templates') > -1)
+              if(arr[i].indexOf('text!' + options.templates) > -1)
                 templates.push(arr[i].trim());                
             }
 
             for(var i in templates){
 
-              var templateFilePath = extraiPath(templates[i]).replace('text!templates', options.templates);              
+              var templateFilePath = extraiPath(templates[i]).replace('text!' + options.templates, options.appDir + '/' + options.templates);              
               var templateData = fs.readFileSync(process.cwd() + '/' + templateFilePath, 'utf8');
               templateData = templateData.replace(/\n/g, '').trim();
 

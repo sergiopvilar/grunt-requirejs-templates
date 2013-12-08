@@ -32,8 +32,9 @@ module.exports = function(grunt) {
     requirejs_templates: {
       dist: {
         options:{
-          scripts: '../app/scripts',
-          templates: '../app/templates'
+          appDir: '../app/',
+          scripts: 'scripts',
+          templates: 'templates'
         }
       }
     },
