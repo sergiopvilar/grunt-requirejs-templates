@@ -82,9 +82,9 @@ Default value: `'templates'`
 
 #### options.output
 Type: `String`
-Default value: `null` // the default value is output to the source folder
+Default value: `null`
 
-Path to your create the script files after processing
+Path to your create the script files after processing, the default value will output to the source folder.
 
 ### Usage Examples
 
