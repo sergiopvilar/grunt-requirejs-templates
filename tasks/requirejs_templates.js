@@ -93,7 +93,7 @@ module.exports = function(grunt) {
                 }
               }
 
-              var templateContent = "\nvar "+variablesList[index] + " = '" + templateData + "';";
+              var templateContent = "\n    var "+variablesList[index] + " = '" + templateData + "';";
 
               variablesList.splice(index, 1);
               require_files.splice(index, 1);
@@ -101,7 +101,7 @@ module.exports = function(grunt) {
               newDefineHeader = newDefineHeader.replace(requires, removeBracketsAndQuotes(JSON.stringify(require_files)));
               newDefineHeader = newDefineHeader.replace(variables, removeBracketsAndQuotes(JSON.stringify(variablesList)));
 
-              newDefineHeader += templateContent; 
+              newDefineHeader += "\n"+templateContent; 
               
             }
 

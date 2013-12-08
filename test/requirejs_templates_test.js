@@ -32,7 +32,7 @@ exports.requirejs_templates = {
 
     var actual = grunt.file.read('tmp/test/fixtures/scripts/sampleView.js');
     var expected = grunt.file.read('test/expected/sampleView.js');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+    test.equal(actual, expected, 'should compare two files to check if the generated file have the template into a string.');
 
     test.done();
   }
