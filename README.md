@@ -27,7 +27,7 @@ define({
     'text!templates/myTemplate.html'        
 ], function (Template) {
 	
-	var html = _.template(Template)(myData)
+	var html = _.template(Template)({name: "Sergio"});
 	
 });
 ```
