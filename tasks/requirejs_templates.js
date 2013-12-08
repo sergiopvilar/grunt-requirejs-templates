@@ -36,7 +36,9 @@ module.exports = function(grunt) {
     string = string.replace("[","");
     string = string.replace("]","");
     string = string.replace(regex,"");
-    string = string.replace(/\\n/g,"\n");
+    string = string.replace(/\\n/g,"");    
+
+    string = string.trim();
 
     return string;
 
@@ -110,10 +112,14 @@ module.exports = function(grunt) {
               
             }
 
-            newDefineHeader = newDefineHeader.replace(requires, removeBracketsAndQuotes(JSON.stringify(require_files)));
+            newDefineHeader = newDefineHeader.replace(requires, removeBracketsAndQuotes(JSON.stringify(require_files)).replace(new RegExp(',', 'g'), ",\n"));
             newDefineHeader = newDefineHeader.replace(variables, removeBracketsAndQuotes(JSON.stringify(variablesList)));
-
             newDefineHeader += "\n" + templates_signature; 
+
+            if(require_files.length < 2){
+              newDefineHeader = newDefineHeader.replace("define([\n    ","define([");
+            }            
+            
             var newFileContent = data.replace(defineHeader, newDefineHeader);   
 
             if(options.output){
