@@ -44,11 +44,22 @@ module.exports = function(grunt) {
 
   }
 
+  Object.merge = function (o1, o2) { // Function to merge all of the properties from one object into another
+      for(var i in o2) { o1[i] = o2[i]; }
+      return o1;
+  };
+
   grunt.registerMultiTask('requirejs_templates', 'A plugin to insert the content of template files like underscore, handlebars to variables into the javascript code', function() {
 
     try{
 
-      var options = this.data.options;    
+      var defaults = {
+        appDir: ".",
+        scripts: "scripts",
+        templates: "templates"
+      };
+
+      var options = Object.merge(defaults, this.data.options);      
   
       // Lê os arquivos 
       file.walkSync(options.appDir + '/' + options.scripts, function(path, dirPath, dirs, files){   

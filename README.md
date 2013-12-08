@@ -66,23 +66,23 @@ grunt.initConfig({
 
 #### options.appDir
 Type: `String`
-Default value: `''`
+Default value: `'.'`
 
 Path to your application
 
 #### options.scripts
 Type: `String`
-Default value: `''`
+Default value: `'scripts'`
 
 Path to your javascript files
 
 #### options.templates
 Type: `String`
-Default value: `''`
+Default value: `'templates'`
 
 #### options.output
 Type: `String`
-Default value: `''`
+Default value: `null` // the default value is output to the source folder
 
 Path to your create the script files after processing
 
