@@ -36,7 +36,7 @@ The grunt-requirejs gets the content of the template file and put it into a stri
 
 ```js
 define([
-], function (Template) {
+], function () {
 	
 	var Template = '<p>This is my template file, <%=name%>!</p>';
 	var html = _.template(Template)({name: "Sergio"});
