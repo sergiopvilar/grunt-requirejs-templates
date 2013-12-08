@@ -16,29 +16,16 @@ module.exports = function(grunt) {
   var file = require('file');
   var mkdirp = require('mkdirp');
 
-  function extraiPath(string){
+  function extractPath(string){
 
-    var quotes = getQuotes(string);
+    var quotes;
+    if(string.indexOf("'") > -1){
+      quotes = "'";
+    }else if(string.indexOf('"') > -1){
+      quotes = '"';
+    } 
     var arr = string.split(quotes);
     return arr[1];
-
-  }
-
-  function getQuotes(string){
-    
-    var singlequotes = false;
-    if(string.indexOf("'") > -1){
-      singlequotes = true;
-    }else if(string.indexOf('"') > -1){
-      singlequotes = false;
-    }
-
-    var quotes = '"';
-    if(singlequotes){
-      quotes = "'";
-    }
-
-    return quotes;
 
   }
 
@@ -95,13 +82,13 @@ module.exports = function(grunt) {
 
             for(var w in templates){
 
-              var templateFilePath = extraiPath(templates[w]).replace('text!' + options.templates, options.appDir + '/' + options.templates);              
+              var templateFilePath = extractPath(templates[w]).replace('text!' + options.templates, options.appDir + '/' + options.templates);              
               var templateData = fs.readFileSync(process.cwd() + '/' + templateFilePath, 'utf8');
               templateData = templateData.replace(/\n/g, '').trim();
 
               var index;
               for(var z in templatesList){
-                if(templatesList[z] === extraiPath(templates[w])){
+                if(templatesList[z] === extractPath(templates[w])){
                   index = z;
                 }
               }
@@ -123,13 +110,11 @@ module.exports = function(grunt) {
             if(options.output){
           
               mkdirp.sync(process.cwd() + '/' + options.output + '/' + path);
-
               fs.writeFileSync(process.cwd() + '/' + options.output + '/' + path + '/' + dirs[u], newFileContent, 'utf8');
               
             }else{
               fs.writeFileSync(process.cwd() + '/' + path + '/' + dirs[u], newFileContent, 'utf8');            
-            }         
-            
+            }                     
                   
           }
 
