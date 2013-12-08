@@ -83,19 +83,10 @@ module.exports = function(grunt) {
               
             }
 
-            //grunt.log.writeln(defineHeader);
-            //grunt.log.writeln('------');
-            var newFileContent = data.replace(defineHeader, newDefineHeader);
-            //grunt.log.writeln(newFileContent);
-
-            
-            var save = fs.writeFileSync(process.cwd() + '/' + path + '/' + dirs[u], newFileContent, 'utf8');
-            grunt.log.writeln(process.cwd() + '/' + path + '/' + dirs[u]);
-
+            var newFileContent = data.replace(defineHeader, newDefineHeader);            
+            fs.writeFileSync(process.cwd() + '/' + path + '/' + dirs[u], newFileContent, 'utf8');            
                   
           }
-
-          //grunt.log.writeln(data);
 
         }      
 

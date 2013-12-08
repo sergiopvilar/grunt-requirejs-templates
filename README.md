@@ -20,7 +20,7 @@ grunt.loadNpmTasks('grunt-requirejs-templates');
 
 ## What it does
 
-Suposing that you have your template files in an separated folder and load them with Require.js like this:
+Supposing that you have your template files in a separated folder and loads them with Require.js like this:
 
 ```js
 grunt.initConfig({
@@ -32,7 +32,7 @@ grunt.initConfig({
 });
 ```
 
-The grunt-requirejs load the .html file and put it into a string to prevent your application to make a XMLHttpRequest to load the .html file:
+The grunt-requirejs gets the content of the template file and put it into a string to prevent your application to make a XMLHttpRequest to load it:
 
 ```js
 grunt.initConfig({
