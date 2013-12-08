@@ -94,9 +94,9 @@ define({
     dist: {
       options: {
         appDir: "app",
-        scripts: "scripts",
+        scripts: "scripts", // This will read the app/scripts folder
         templates: "templates",
-        output "dist/scripts"
+        output "dist" // This will create the dist/scripts folder
       },
     }
   }
