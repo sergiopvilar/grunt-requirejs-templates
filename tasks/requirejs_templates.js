@@ -6,12 +6,53 @@
  * Licensed under the MIT license.
  */
 
+/*jshint evil:true */
+
 'use strict';
 
 module.exports = function(grunt) {
 
   var fs = require('fs');
   var file = require('file');
+
+  function extraiPath(string){
+
+    var quotes = getQuotes(string);
+    var arr = string.split(quotes);
+    return arr[1];
+
+  }
+
+  function getQuotes(string){
+    
+    var singlequotes = false;
+    if(string.indexOf("'") > -1){
+      singlequotes = true;
+    }else if(string.indexOf('"') > -1){
+      singlequotes = false;
+    }
+
+    var quotes = '"';
+    if(singlequotes){
+      quotes = "'";
+    }
+
+    return quotes;
+
+  }
+
+  function removeBracketsAndQuotes(string){
+
+    var regex = new RegExp('"', 'g');
+
+    string = string.replace("[","");
+    string = string.replace("]","");
+    string = string.replace(regex,"");
+    string = string.replace(/\\n/g,"\n");
+
+    return string;
+
+  }
 
   grunt.registerMultiTask('requirejs_templates', 'A plugin to insert the content of template files like underscore, handlebars to variables into the javascript code', function() {
 
@@ -46,22 +87,25 @@ module.exports = function(grunt) {
             var arr = requires.split(',');
             for(var i in arr){
               require_files.push(arr[i]);
-              if(arr[i].indexOf('text!' + options.templates) > -1)
+              if(arr[i].indexOf('text!' + options.templates) > -1){
                 templates.push(arr[i].trim());                
+              }
             }
 
-            for(var i in templates){
+            for(var w in templates){
 
-              var templateFilePath = extraiPath(templates[i]).replace('text!' + options.templates, options.appDir + '/' + options.templates);              
+              var templateFilePath = extraiPath(templates[w]).replace('text!' + options.templates, options.appDir + '/' + options.templates);              
               var templateData = fs.readFileSync(process.cwd() + '/' + templateFilePath, 'utf8');
               templateData = templateData.replace(/\n/g, '').trim();
 
               var index;
               for(var z in templatesList){
-                if(templatesList[z] == extraiPath(templates[i])) index = z;
+                if(templatesList[z] === extraiPath(templates[w])){
+                  index = z;
+                }
               }
 
-              var templateContent = "\nvar "+variablesList[index] + " = '" + templateData + "';"
+              var templateContent = "\nvar "+variablesList[index] + " = '" + templateData + "';";
 
               variablesList.splice(index, 1);
               require_files.splice(index, 1);
@@ -90,40 +134,3 @@ module.exports = function(grunt) {
   });
 
 };
-
-function extraiPath(string){
-
-  var quotes = getQuotes(string);
-  var arr = string.split(quotes);
-  return arr[1];
-
-}
-
-function getQuotes(string){
-  
-  var singlequotes = false;
-  if(string.indexOf("'") > -1){
-    singlequotes = true;
-  }else if(string.indexOf('"') > -1){
-    singlequotes = false;
-  }
-
-  var quotes = '"';
-  if(singlequotes) quotes = "'";
-
-  return quotes;
-
-}
-
-function removeBracketsAndQuotes(string){
-
-  var regex = new RegExp('"', 'g')
-
-  string = string.replace("[","");
-  string = string.replace("]","");
-  string = string.replace(regex,"");
-  string = string.replace(/\\n/g,"\n");
-
-  return string;
-
-}
