@@ -23,7 +23,7 @@ grunt.loadNpmTasks('grunt-requirejs-templates');
 Supposing that you have your template files in a separated folder and loads them with Require.js like this:
 
 ```js
-define({
+define([
     'text!templates/myTemplate.html'        
 ], function (Template) {
 	
@@ -35,8 +35,7 @@ define({
 The grunt-requirejs gets the content of the template file and put it into a string to prevent your application to make a XMLHttpRequest to load it:
 
 ```js
-define({
-    'text!templates/myTemplate.html'        
+define([
 ], function (Template) {
 	
 	var Template = '<p>This is my template file, <%=name%>!</p>';
