@@ -34,21 +34,18 @@ module.exports = function(grunt) {
             var defineHeader = 'define([' + defineHeader_array2[0] + '{';
             var newDefineHeader = defineHeader;
 
-            var templatesList = eval("[" + defineHeader_array2[0].trim().split(']')[0] + "]");
-            var variablesList_array1 = defineHeader_array2[0].split(']')[1].split('(')[1].split(')')[0].replace(/\s/g, "").split(',');
-            var variablesList = "[";
+            var templatesList = eval("[" + defineHeader_array2[0].trim().split(']')[0] + "]");            
             
-            for(var i in variablesList_array1){
-              variablesList += "'" + variablesList_array1[i] + "',";
-            }
+            var variables = defineHeader_array2[0].split(']')[1].split('(')[1].split(')')[0];
+            var requires = defineHeader_array2[0].trim().split(']')[0];
 
-            variablesList = variablesList.substring(0, variablesList.length - 1);
-            variablesList += "]";
-            variablesList = eval(variablesList);            
+            var variablesList = variables.split(', ');
 
             var templates = [];
-            var arr = data.split(' ');
+            var require_files = [];
+            var arr = requires.split(',');
             for(var i in arr){
+              require_files.push(arr[i]);
               if(arr[i].indexOf('text!' + options.templates) > -1)
                 templates.push(arr[i].trim());                
             }
@@ -64,22 +61,15 @@ module.exports = function(grunt) {
                 if(templatesList[z] == extraiPath(templates[i])) index = z;
               }
 
-              var quotes = getQuotes(templates[i]);
+              var templateContent = "\nvar "+variablesList[index] + " = '" + templateData + "';"
 
-              var requireStringToReplace = quotes + templatesList[index] + quotes;
-              if(newDefineHeader.indexOf(requireStringToReplace+",") > -1)
-                requireStringToReplace = requireStringToReplace+",";
+              variablesList.splice(index, 1);
+              require_files.splice(index, 1);
 
-              var variableStringToReplace = variablesList[index];
-              if(newDefineHeader.indexOf(","+variableStringToReplace) > -1){
-                variableStringToReplace = ","+variableStringToReplace;
-              }else if(newDefineHeader.indexOf(", "+variableStringToReplace) > -1){
-                variableStringToReplace = ", "+variableStringToReplace;
-              }
+              newDefineHeader = newDefineHeader.replace(requires, removeBracketsAndQuotes(JSON.stringify(require_files)));
+              newDefineHeader = newDefineHeader.replace(variables, removeBracketsAndQuotes(JSON.stringify(variablesList)));
 
-              newDefineHeader = newDefineHeader.replace(requireStringToReplace, '');
-              newDefineHeader = newDefineHeader.replace(variableStringToReplace, '');
-              newDefineHeader += "\nvar "+variablesList[index] + " = '" + templateData + "';";            
+              newDefineHeader += templateContent; 
               
             }
 
@@ -103,7 +93,6 @@ module.exports = function(grunt) {
 
 function extraiPath(string){
 
-  
   var quotes = getQuotes(string);
   var arr = string.split(quotes);
   return arr[1];
@@ -123,5 +112,18 @@ function getQuotes(string){
   if(singlequotes) quotes = "'";
 
   return quotes;
+
+}
+
+function removeBracketsAndQuotes(string){
+
+  var regex = new RegExp('"', 'g')
+
+  string = string.replace("[","");
+  string = string.replace("]","");
+  string = string.replace(regex,"");
+  string = string.replace(/\\n/g,"\n");
+
+  return string;
 
 }
