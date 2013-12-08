@@ -57,6 +57,8 @@ module.exports = function(grunt) {
 
           if(data.indexOf('text!' + options.templates) > -1){
 
+            var templates_signature = '';
+
             var defineHeader_array1 = data.split('define([');
             var defineHeader_array2 = defineHeader_array1[1].split('{');
 
@@ -69,6 +71,7 @@ module.exports = function(grunt) {
             var requires = defineHeader_array2[0].trim().split(']')[0];
 
             var variablesList = variables.split(', ');
+            var _variablesList = variables.split(', ');
 
             var templates = [];
             var require_files = [];
@@ -80,7 +83,9 @@ module.exports = function(grunt) {
               }
             }
 
-            for(var w in templates){
+            var templates_counter = 0;
+
+            for(var w in templates){              
 
               var templateFilePath = extractPath(templates[w]).replace('text!' + options.templates, options.appDir + '/' + options.templates);              
               var templateData = fs.readFileSync(process.cwd() + '/' + templateFilePath, 'utf8');
@@ -93,18 +98,22 @@ module.exports = function(grunt) {
                 }
               }
 
-              var templateContent = "\n    var "+variablesList[index] + " = '" + templateData + "';";
+              index = index - templates_counter;           
 
               variablesList.splice(index, 1);
-              require_files.splice(index, 1);
+              require_files.splice(index, 1);              
 
-              newDefineHeader = newDefineHeader.replace(requires, removeBracketsAndQuotes(JSON.stringify(require_files)));
-              newDefineHeader = newDefineHeader.replace(variables, removeBracketsAndQuotes(JSON.stringify(variablesList)));
+              var templateContent = "\n    var "+_variablesList[index] + " = '" + templateData + "';";
+              templates_signature += templateContent;   
 
-              newDefineHeader += "\n"+templateContent; 
+              templates_counter++;            
               
             }
 
+            newDefineHeader = newDefineHeader.replace(requires, removeBracketsAndQuotes(JSON.stringify(require_files)));
+            newDefineHeader = newDefineHeader.replace(variables, removeBracketsAndQuotes(JSON.stringify(variablesList)));
+
+            newDefineHeader += "\n" + templates_signature; 
             var newFileContent = data.replace(defineHeader, newDefineHeader);   
 
             if(options.output){
