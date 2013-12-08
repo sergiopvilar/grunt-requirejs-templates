@@ -9,14 +9,42 @@ This plugin requires Grunt `~0.4.2`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install requirejs-templates --save-dev
+npm install grunt-requirejs-templates --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('requirejs-templates');
+grunt.loadNpmTasks('grunt-requirejs-templates');
 ```
+
+## What it does
+
+Suposing that you have your template files in an separated folder and load them with Require.js like this:
+
+```js
+grunt.initConfig({
+    'text!templates/myTemplate.html'        
+], function (Template) {
+	
+	var html = _.template(Template)(myData)
+	
+});
+```
+
+The grunt-requirejs load the .html file and put it into a string to prevent your application to make a XMLHttpRequest to load the .html file:
+
+```js
+grunt.initConfig({
+    'text!templates/myTemplate.html'        
+], function (Template) {
+	
+	var Template = '<p>This is my template file, <%=name%>!</p>';
+	var html = _.template(Template)({name: "Sergio"});
+	
+});
+```
+
 
 ## The "requirejs_templates" task
 
@@ -26,60 +54,41 @@ In your project's Gruntfile, add a section named `requirejs_templates` to the da
 ```js
 grunt.initConfig({
   requirejs_templates: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
+    dist: {
+      options: {
+        // your options here
+      },
+    }
+  }
 });
 ```
 
 ### Options
 
-#### options.separator
+#### options.scripts
 Type: `String`
-Default value: `',  '`
+Default value: `''`
 
-A string value that is used to do something with whatever.
+Path to your javascript files
 
-#### options.punctuation
+#### options.templates
 Type: `String`
-Default value: `'.'`
+Default value: `''`
 
-A string value that is used to do something else with whatever else.
+Path to your template files
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
 ```js
 grunt.initConfig({
   requirejs_templates: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  requirejs_templates: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    dist: {
+      options: {
+        scripts: "app/scripts",
+        templates: "app/templates"
+      },
+    }
+  }
 });
 ```
 
