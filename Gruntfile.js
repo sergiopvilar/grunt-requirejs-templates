@@ -49,6 +49,15 @@ module.exports = function(grunt) {
         }
       },
 
+      more_files:{
+        options: {
+          appDir: 'test/fixtures',
+          scripts: 'scripts/more_files',
+          templates: 'templates',
+          output: 'tmp'
+        }
+      },
+
     },
 
     // Unit tests.

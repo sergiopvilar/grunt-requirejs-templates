@@ -1,6 +1,3 @@
-define([
-    'controllers/sampleController',
-    'text!templates/sampleTemplate.html'
-], function (Controller, Template) {    
+define(['text!templates/sampleTemplate.html'], function (Template) {    
 
 });

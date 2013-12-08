@@ -46,6 +46,21 @@ exports.requirejs_templates = {
 
     test.done();
 
+  },
+
+  more_files: function(test){
+
+    var actual_1 = grunt.file.read('tmp/test/fixtures/scripts/more_files/view1.js');
+    var expected_1 = grunt.file.read('test/expected/more_files_1.js');
+
+    var actual_2 = grunt.file.read('tmp/test/fixtures/scripts/more_files/view2.js');
+    var expected_2 = grunt.file.read('test/expected/more_files_2.js');
+
+    test.equal(actual_1, expected_1, 'should convert one file with one template file and...');
+    test.equal(actual_2, expected_2, 'should other file with one template file and.');
+
+    test.done();
+
   }
 
 };

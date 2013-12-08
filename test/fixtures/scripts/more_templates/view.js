@@ -1,8 +1,10 @@
 define([
-    'controllers/sampleController',
     'text!templates/sampleTemplate.html',
     'text!templates/sampleTemplate2.html',
+    'controllers/sampleController',
+    'models/sampleModel',
+    'libs/sampleLib',
     'text!templates/sampleTemplate3.html'
-], function (Controller, Template, Template2, Template3) {    
+], function (Template, Template2, Controller, Model, Lib, Template3) {    
 
 });
