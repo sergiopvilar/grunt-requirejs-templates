@@ -36,7 +36,8 @@ module.exports = function(grunt) {
     string = string.replace("[","");
     string = string.replace("]","");
     string = string.replace(regex,"");
-    string = string.replace(/\\n/g,"");    
+    string = string.replace(/\\n/g,"");   
+    string = string.replace(/\\r/g,""); 
 
     string = string.trim();
 
@@ -102,7 +103,7 @@ module.exports = function(grunt) {
 
               var templateFilePath = extractPath(templates[w]).replace('text!' + options.templates, options.appDir + '/' + options.templates);              
               var templateData = fs.readFileSync(process.cwd() + '/' + templateFilePath, 'utf8');
-              templateData = templateData.replace(/\n/g, '').trim();
+              templateData = templateData.replace(/\n/g, '').replace(/\r/g, '').trim();
 
               var index;
               for(var z in templatesList){
