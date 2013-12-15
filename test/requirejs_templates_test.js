@@ -1,6 +1,9 @@
 'use strict';
 
 var grunt = require('grunt');
+var requirejs = require('requirejs');
+var _ = require('underscore');
+var handlebars = require('handlebars');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -27,6 +30,8 @@ exports.requirejs_templates = {
   setUp: function(done) {
     done();
   },
+
+  // Tests to check if the file has been processed correctly
 
   default: function(test) {
     test.expect(1);
@@ -57,10 +62,65 @@ exports.requirejs_templates = {
     var expected_2 = grunt.file.read('test/expected/more_files_2.js');
 
     test.equal(actual_1, expected_1, 'should convert one file with one template file and...');
-    test.equal(actual_2, expected_2, 'should other file with one template file and.');
+    test.equal(actual_2, expected_2, 'should other file with one template file.');
 
     test.done();
 
+  },
+
+  // Tests to check renderization of templates with external libs
+  
+  render_underscore: function(test){
+
+    // Test the file processing
+    var actual = grunt.file.read('tmp/test/fixtures/scripts/render_underscore/view.js');
+    var expected = grunt.file.read('test/expected/render_underscore.js');
+
+    test.equal(actual, expected, 'should process a file with a underscore template.');
+
+    // Test the template rendering
+    requirejs(['tmp/test/fixtures/scripts/render_underscore/view.js'], function(view){
+
+      var templateData = {
+        data: ['item1', 'item2', 'item3']
+      };
+
+      var result = _.template(view)(templateData);
+      var expected = grunt.file.read('test/expected/engine_expected.html');
+
+      test.equal(result, expected, 'should render a template file with underscore');
+
+      test.done();
+
+    });    
+
+  },
+  
+  render_handlebars: function(test){
+
+    // Test the file processing
+    var actual = grunt.file.read('tmp/test/fixtures/scripts/render_handlebars/view.js');
+    var expected = grunt.file.read('test/expected/render_handlebars.js');
+
+    test.equal(actual, expected, 'should process a file with a handlebars template.');
+
+    // Test the template rendering
+    requirejs(['tmp/test/fixtures/scripts/render_handlebars/view.js'], function(view){
+
+      var templateData = {
+        data: ['item1', 'item2', 'item3']
+      };
+
+      var result = handlebars.compile(view)(templateData);
+      var expected = grunt.file.read('test/expected/engine_expected.html');
+
+      test.equal(result, expected, 'should render a template file with handlebars');
+
+      test.done();
+
+    });    
+
   }
+
 
 };

@@ -1,6 +1,6 @@
 define([
     'controllers/sampleController',
-    'text!templates/sampleTemplate3.html'
+    'text!templates/template3.html'
 ], function (Controller, Template) {    
 
 });

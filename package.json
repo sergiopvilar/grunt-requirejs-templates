@@ -32,7 +32,10 @@
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt": "~0.4.2"
+    "grunt": "~0.4.2",
+    "underscore": "~1.5.2",
+    "requirejs": "~2.1.9",
+    "handlebars": "~1.1.2"
   },
   "peerDependencies": {
     "grunt": "~0.4.2"

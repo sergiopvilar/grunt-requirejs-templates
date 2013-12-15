@@ -1,3 +1,3 @@
-define(['text!templates/sampleTemplate.html'], function (Template) {    
+define(['text!templates/template1.html'], function (Template) {    
 
 });
