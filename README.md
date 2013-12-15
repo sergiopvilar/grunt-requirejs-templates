@@ -44,6 +44,17 @@ define([
 });
 ```
 
+### Supported template engines
+
+Today grunt-requirejs-templates supports this template engines:
+
+* [Handlebars](http://handlebarsjs.com/)
+* [Underscore](http://underscorejs.org/#template)
+* [EJS](http://embeddedjs.com/)
+* [Dust](http://akdubya.github.io/dustjs/)
+
+Help us to write tests and support another template engines!
+
 
 ## The "requirejs_templates" task
 
