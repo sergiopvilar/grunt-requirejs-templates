@@ -35,7 +35,10 @@
     "grunt": "~0.4.2",
     "underscore": "~1.5.2",
     "requirejs": "~2.1.9",
-    "handlebars": "~1.1.2"
+    "handlebars": "~1.1.2",
+    "ejs": "~0.8.5",
+    "dust": "~0.3.0",
+    "dustjs-linkedin": "~2.2.2"
   },
   "peerDependencies": {
     "grunt": "~0.4.2"

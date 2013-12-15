@@ -4,6 +4,8 @@ var grunt = require('grunt');
 var requirejs = require('requirejs');
 var _ = require('underscore');
 var handlebars = require('handlebars');
+var ejs = require('ejs');
+var dust = require('dustjs-linkedin');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -120,7 +122,68 @@ exports.requirejs_templates = {
 
     });    
 
-  }
+  },
 
+  render_ejs: function(test){
+
+    // Test the file processing
+    var actual = grunt.file.read('tmp/test/fixtures/scripts/render_ejs/view.js');
+    var expected = grunt.file.read('test/expected/render_ejs.js');
+
+    test.equal(actual, expected, 'should process a file with a EJS template.');
+
+    // Test the template rendering
+    requirejs(['tmp/test/fixtures/scripts/render_ejs/view.js'], function(view){
+
+      var templateData = {
+        data: ['item1', 'item2', 'item3']
+      };
+
+      var result = ejs.render(view, templateData);
+      var expected = grunt.file.read('test/expected/engine_expected.html');
+
+      test.equal(result, expected, 'should render a template file with EJS');
+
+      test.done();
+
+    });    
+
+  },
+
+  render_dust: function(test){
+
+    // Test the file processing
+    var actual = grunt.file.read('tmp/test/fixtures/scripts/render_dust/view.js');
+    var expected = grunt.file.read('test/expected/render_dust.js');
+
+    test.equal(actual, expected, 'should process a file with a Dust template.');
+
+    // Test the template rendering
+    requirejs(['tmp/test/fixtures/scripts/render_dust/view.js'], function(view){
+
+      var templateData = {
+        data: ['item1', 'item2', 'item3']
+      };
+
+      var compiled = dust.compile(view, "view");
+      dust.loadSource(compiled);
+
+      dust.render("view", templateData, function(err, out){
+
+        if(err){
+          throw new Error(err);
+        }
+
+        var expected = grunt.file.read('test/expected/engine_expected.html');
+
+        test.equal(out, expected, 'should render a template file with Dust');
+
+        test.done();
+
+      });      
+
+    });    
+
+  }
 
 };
