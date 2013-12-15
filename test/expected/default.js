@@ -1,5 +1,5 @@
 define([], function () {
 
-    var Template = '<h1>Hi, there!</h1>';    
+    var Template = '<h1 class="main">Hi, there!</h1>';    
 
 });

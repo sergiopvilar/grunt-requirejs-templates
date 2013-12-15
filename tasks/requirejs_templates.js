@@ -102,7 +102,7 @@ module.exports = function(grunt) {
 
               var templateFilePath = extractPath(templates[w]).replace('text!' + options.templates, options.appDir + '/' + options.templates);              
               var templateData = fs.readFileSync(process.cwd() + '/' + templateFilePath, 'utf8');
-              templateData = templateData.replace(/\n/g, '').trim();
+              templateData = templateData.replace(/\n/g, '').replace(/'/g, '"').trim();
 
               var index;
               for(var z in templatesList){
