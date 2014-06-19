@@ -1,7 +1,7 @@
 {
   "name": "grunt-requirejs-templates",
   "description": "A plugin to insert the content of template files like underscore, handlebars to variables into the javascript code",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "homepage": "https://github.com/sergiovilar/grunt-requirejs-templates",
   "author": {
     "name": "Sérgio Vilar",

@@ -93,7 +93,8 @@ module.exports = function(grunt) {
             var arr = requires.split(',');
             for(var i in arr){
               require_files.push(arr[i]);
-              if(arr[i].indexOf('text!' + options.templates) > -1){
+
+              if(arr[i].indexOf('text!') > -1){
                 templates.push(arr[i].trim());                
               }
             }
@@ -102,7 +103,14 @@ module.exports = function(grunt) {
 
             for(var w in templates){              
 
-              var templateFilePath = extractPath(templates[w]).replace('text!' + options.templates, options.appDir + '/' + options.templates);              
+				if(templates[w].indexOf('text!' + options.templates) > -1){
+					var templateFilePath = extractPath(templates[w]).replace('text!' + options.templates, options.appDir + '/' + options.templates);
+				}else{
+
+					var templateFilePath = templates[w].replace('text!', options.appDir + '/').replace(/'/g, '');
+
+				}
+
               var templateData = fs.readFileSync(process.cwd() + '/' + templateFilePath, 'utf8');
               templateData = templateData.replace(/\n/g, '').replace(/\r/g, '').replace(/\t/g, '').replace(/'/g, '"').trim();
 
@@ -122,12 +130,12 @@ module.exports = function(grunt) {
               require_files.splice(index, 1);                            
 
               templates_counter++;            
-              
+
             }
 
             newDefineHeader = newDefineHeader.replace(requires, removeBracketsAndQuotes(JSON.stringify(require_files)).replace(new RegExp(',', 'g'), ",\n"));
             newDefineHeader = newDefineHeader.replace(variables, removeBracketsAndQuotes(JSON.stringify(variablesList)));
-            newDefineHeader += "\n" + templates_signature; 
+            newDefineHeader += "\n" + templates_signature;
 
             if(require_files.length < 2){
               newDefineHeader = newDefineHeader.replace("define([\n    ","define([");
@@ -144,7 +152,11 @@ module.exports = function(grunt) {
               fs.writeFileSync(process.cwd() + '/' + path + '/' + dirs[u], newFileContent, 'utf8');            
             }                     
                   
-          }
+          }else{
+			  mkdirp.sync(process.cwd() + '/' + options.output + '/' + path);
+			  fs.writeFileSync(process.cwd() + '/' + options.output + '/' + path + '/' + dirs[u], data, 'utf8');
+
+		  }
 
         }      
 
